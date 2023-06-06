@@ -1,3 +1,4 @@
+// https://github.com/vancexu/Algs4/blob/master/JobInterviewQuestions/1.1_union_find/WeightedQuickUnionUF.java
 import java.io.FileInputStream;
 import java.util.Scanner;
 
@@ -13,7 +14,6 @@ public class SocialNetworkConQuickUnion {
     for (int i = 0; i < N; i++) {
       id[i] = i;
     }
-    ;
   }
 
   private int root(int i) {
