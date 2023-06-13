@@ -1,5 +1,3 @@
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -91,22 +89,22 @@ public class Percolation {
   // is the site (row, col) full?
   public boolean isFull(int row, int col) {
     checkIsOnGrid(row, col);
-    return grid[row][col];
+    return wquFull.find(getFlatIndex(row, col)) == wquFull.find(virtualTop);
   }
 
-  public void checkIsOnGrid(int row, int col) {
+  private void checkIsOnGrid(int row, int col) {
     if (!isOnGrid(row, col)) {
       throw new IllegalArgumentException("Index out of bound.");
     }
   }
 
   // is the site (row, col) on grid?
-  public boolean isOnGrid(int row, int col) {
+  private boolean isOnGrid(int row, int col) {
     return (row >= 0 && col >= 0 && row < this.gridSize && col < this.gridSize);
   }
 
   // is the site (row, col) on grid?
-  public int getFlatIndex(int row, int col) {
+  private int getFlatIndex(int row, int col) {
     // 1 is for vitualTop
     return row * gridSize + col + 1;
   }
@@ -118,21 +116,20 @@ public class Percolation {
 
   // does the system percolate?
   public boolean percolates() {
-    return wquOpen.connected(virtualTop, virtualBottom);
+    return wquOpen.find(virtualTop) == wquOpen.find(virtualBottom);
   }
 
   // test client (optional)
   public static void main(String[] args) {
-    try {
-      Percolation pc = new Percolation(3);
-      pc.open(1, 1);
-      pc.open(1, 2);
-      pc.open(2, 2);
-      pc.open(3, 2);
-      System.out.println(pc.percolates());
-    } catch (Exception e) {
-      System.out.println(e);
+    String msg = "The grid isn't percolation.";
+    Percolation pc = new Percolation(5);
+    pc.open(-1, 1);
+    pc.open(1, 2);
+    pc.open(2, 2);
+    pc.open(3, 2);
+    if (pc.percolates()) {
+      msg = "The grid is percolation.";
     }
-
+    System.out.println(msg);
   }
 }
